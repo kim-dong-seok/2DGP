@@ -3,7 +3,7 @@ open_canvas()
 grass = load_image('grass.png')
 
 character = load_image('animation_sheet.png')
-x =0
+x =1
 y=0
 frame=0
 while (True):
@@ -11,7 +11,6 @@ while (True):
         y=0
     elif x<=0:
         y=1
-
 
 
     if y==0:
@@ -32,7 +31,6 @@ while (True):
         x=x+10
         delay(0.05)
         get_events()
-
 
 close_canvas()
 
