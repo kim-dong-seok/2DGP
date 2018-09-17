@@ -18,7 +18,7 @@ def move_character(start_x , start_y, last_x, last_y):
             frame = (frame + 1) % 8
             x -= (start_x-last_x)//10
             y -= (start_y-last_y)//10
-            delay(0.5)
+            delay(0.03)
             get_events()
     elif start_x <= last_x:
         while x <= last_x:
@@ -29,7 +29,7 @@ def move_character(start_x , start_y, last_x, last_y):
             frame = (frame + 1) % 8
             x -= (start_x-last_x)//10
             y -= (start_y-last_y)//10
-            delay(0.5)
+            delay(0.03)
             get_events()
 
 
