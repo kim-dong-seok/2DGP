@@ -34,9 +34,26 @@ def move_character(start_x , start_y, last_x, last_y):
 
 
 while True:
-    
+
     #1
     move_character(203, 535, 132, 243)
-
+    #2
+    move_character(132, 243, 535, 470)
+    #3
+    move_character(535, 470, 477, 203)
+    #4
+    move_character(477, 203, 715, 136)
+    #5
+    move_character(715, 136, 316, 225)
+    #6
+    move_character(316, 225, 510, 92)
+    #7
+    move_character(510, 92, 692, 518)
+    #8
+    move_character(692, 518, 682, 336)
+    #9
+    move_character(682, 336, 712, 349)
+    #10
+    move_character(712, 349, 203, 535)
 
 close_canvas()
