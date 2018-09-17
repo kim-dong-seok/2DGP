@@ -47,7 +47,13 @@ def move_down():
 
 
 def move_form_left_to_center():
-    pass
+    x, y = 25, 90
+    while x < 800//2:
+        clear_canvas_now()
+        grass.draw_now(400, 30)
+        character.draw_now(x, y)
+        x += 2
+        delay(0.01)
 
 
 def make_rectangle():
