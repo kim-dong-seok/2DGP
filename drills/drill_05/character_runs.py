@@ -44,7 +44,7 @@ def move_character_03():
     while x>477:
         clear_canvas()
         grass.draw(400, 30)
-        character.clip_draw(frame * 100, 100, 100, 100, x, y)
+        character.clip_draw(frame * 100, 0, 100, 100, x, y)
         update_canvas()
         frame = (frame + 1) % 8
         x -= (535-477)//20
@@ -65,10 +65,27 @@ def move_character_04():
         y -= (203-136)//20
         delay(0.1)
         get_events()
-        
-#move_character_01()
-#move_character_02()
-#move_character_03()
-#move_character_04()
+
+def move_character_05():
+    x = 715
+    y = 136
+    frame = 0
+    while x>316:
+        clear_canvas()
+        grass.draw(400, 30)
+        character.clip_draw(frame * 100, 0, 100, 100, x, y)
+        update_canvas()
+        frame = (frame + 1) % 8
+        x -= (715-316)//20
+        y += (225-136)//20
+        delay(0.1)
+        get_events()
+
+
+move_character_01()
+move_character_02()
+move_character_03()
+move_character_04()
+move_character_05()
 
 close_canvas()
