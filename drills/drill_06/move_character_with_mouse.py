@@ -6,6 +6,7 @@ KPU_WIDTH, KPU_HEIGHT = 1280, 1024
 def handle_events():
     global running
     global  m_x, m_y
+    global move_x, move_y
     global x,y
     global dir
     events= get_events()
@@ -14,6 +15,13 @@ def handle_events():
             running = False
         elif event.type == SDL_MOUSEMOTION:
             m_x, m_y = event.x, KPU_HEIGHT -1 - event.y
+        elif event.type == SDL_MOUSEBUTTONDOWN:
+                move_x,move_y = event.x, KPU_HEIGHT -1 - event.y
+                if x <= move_x:
+                    dir=1
+                else:
+                    dir=0
+
         elif event.type == SDL_KEYDOWN and event.key == SDLK_ESCAPE:
             running = False
 
@@ -27,7 +35,7 @@ running = True
 m_x, m_y = KPU_WIDTH // 2, KPU_HEIGHT // 2
 x, y = KPU_WIDTH // 2, KPU_HEIGHT // 2
 frame = 0
-dir=0
+dir=-1
 hide_cursor()
 
 while running:
@@ -35,11 +43,22 @@ while running:
     kpu_ground.draw(KPU_WIDTH // 2, KPU_HEIGHT // 2)
     hand_arrow.draw(m_x,m_y)
 
-    character.clip_draw(frame * 100, 100 * 1, 100, 100, x, y)
+    character.clip_draw(frame * 100, 100 * dir, 100, 100, x, y)
     update_canvas()
-    if dir != 0:
+    if dir == 1:
+        start_x = x
+        start_y = y
         frame = (frame + 1) % 8
-
+        while x < move_x:
+            x += (move_x-start_x)/10
+            y += (move_y-start_y)/10
+    if dir == 0:
+        start_x = x
+        start_y = y
+        frame = (frame + 1) % 8
+        while x > move_x:
+            x += (move_x-start_x)/10
+            y += (move_y-start_y)/10
     delay(0.02)
     handle_events()
 
