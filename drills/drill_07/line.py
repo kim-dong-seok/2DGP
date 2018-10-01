@@ -2,6 +2,8 @@ from pico2d import *
 import turtle
 import random
 
+
+
 open_canvas()
 grass = load_image('KPU_GROUND.png')
 character = load_image('animation_sheet.png')
@@ -31,8 +33,10 @@ size = 20
 points =[(random.randint(0, 500), random.randint(0, 500)) for i in range(size)]
 n = 1
 
+
 while True:
     draw_line(points[n-1], points[n])
     n = (n+1) % size
+
 
 close_canvas()
