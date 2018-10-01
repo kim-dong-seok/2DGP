@@ -50,17 +50,20 @@ while running:
         start_y = y
         frame = (frame + 1) % 8
         while x < move_x:
-            x += (move_x-start_x)/10
-            y += (move_y-start_y)/10
-    if dir == 0:
+
+            x += (move_x-start_x)/100
+            y += (move_y-start_y)/100
+    elif dir == 0:
         start_x = x
         start_y = y
         frame = (frame + 1) % 8
         while x > move_x:
-            x += (move_x-start_x)/10
-            y += (move_y-start_y)/10
-    delay(0.02)
-    handle_events()
+
+            x += (move_x-start_x)/100
+            y += (move_y-start_y)/100
+    else:
+        delay(0.05)
+        handle_events()
 
 close_canvas()
 
