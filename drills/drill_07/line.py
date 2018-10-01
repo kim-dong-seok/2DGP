@@ -8,9 +8,9 @@ character = load_image('animation_sheet.png')
 
 
 def draw_line(p1, p2):
-
+    frame = 0
     for i in range(0, 100 + 1, 5):
-        frame = 0
+
         t = i / 100
         x = (1-t)*p1[0]+t*p2[0]
         y = (1 - t) * p1[1] + t * p2[1]
@@ -19,7 +19,6 @@ def draw_line(p1, p2):
         character.clip_draw(frame * 100, 0, 100, 100, x, y)
         update_canvas()
         frame = (frame + 1) % 8
-        frame=frame+1
         delay(0.05)
         get_events()
 
