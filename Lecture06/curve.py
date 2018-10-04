@@ -82,7 +82,7 @@ def draw_curve_4_points(p1, p2, p3, p4):
     draw_point(p3)
 
     # draw p3-p4
-
+def draw_curve_4_points(p1, p2, p3, p4):
 
 
 
