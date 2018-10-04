@@ -2,15 +2,15 @@ from pico2d import *
 import random
 
 
-
 open_canvas()
 grass = load_image('KPU_GROUND.png')
 character = load_image('animation_sheet.png')
 
+
 def draw_random_soft_move(p1, p2,p3,p4):
     frame = 0
     clip_num =0
-    for i in range(0, 100 , 5):
+    for i in range(0, 100, 5):
 
         t = i / 100
         x = ((-t**3 + 2*t**2 - t)*p1[0] + (3*t**3 - 5*t**2 + 2)*p2[0] + (-3*t**3 + 4*t**2 + t)*p3[0] + (t**3 - t**2)*p4[0])/2
@@ -27,8 +27,9 @@ def draw_random_soft_move(p1, p2,p3,p4):
         delay(0.05)
         get_events()
 
+
 size = 20
-points =[(random.randint(0, 500), random.randint(0, 500)) for i in range(size)]
+points =[(random.randint(100, 500), random.randint(50, 500)) for i in range(size)]
 n = 1
 
 
