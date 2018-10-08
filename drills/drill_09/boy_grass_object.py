@@ -24,8 +24,21 @@ class Boy:
     def draw(self):
         self.image.clip_draw(self.frame * 100, 0, 100, 100, self.x, self.y)
 
-class randomBall:
-    pass
+
+class RandomBall:
+
+    def __init__(self):
+        self.x = 400
+        self.y = 600
+        self.image = load_image('ball41x41.png')
+
+    def update(self):
+        if self.y > 75:
+            self.y -= 5
+
+    def draw(self):
+        self.image.draw(self.x, self.y)
+
 
 def handle_events():
 
@@ -41,16 +54,19 @@ def handle_events():
 open_canvas()
 team = [Boy() for i in range(11)]
 grass = Grass()
+ball= RandomBall()
 running = True;
 # game main loop code
 while running:
     handle_events()
     for boy in team:
         boy.update()
+    ball.update()
     clear_canvas()
     grass.draw()
     for boy in team:
         boy.draw()
+    ball.draw()
     update_canvas()
     delay(0.05)
 # finalization code
