@@ -12,14 +12,15 @@ class Grass:
 class Boy:
 
     def __init__(self):
-        self.x = randrange(0,600,30)
+        self.x = randrange(0,400,30)
         self.y = 90
         self.frame = 0
+        self.speed = randint(5, 30)
         self.image = load_image('run_animation.png')
 
     def update(self):
         self.frame = (self.frame + 1) % 8
-        self.x += 5
+        self.x += self.speed
 
     def draw(self):
         self.image.clip_draw(self.frame * 100, 0, 100, 100, self.x, self.y)
@@ -28,14 +29,21 @@ class Boy:
 class Randomball:
 
     def __init__(self):
+        self.size = randint(1, 2)
         self.y = 600
         self.x = randint(21, 779)
         self.speed = randint(5, 30)
-        self.image = load_image('ball41x41.png')
+        if self.size == 1:
+            self.image = load_image('ball41x41.png')
+        else:
+            self.image = load_image('ball21x21.png')
 
     def update(self):
         if self.y > 75:
             self.y -= self.speed
+        else:
+            if self.y > 65:
+                self.y -= self.speed
 
     def draw(self):
         self.image.draw(self.x, self.y)
