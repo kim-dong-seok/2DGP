@@ -1,13 +1,16 @@
 from pico2d import *
 from random import *
 
+
 # Game object class here
 class Grass:
+
     def __init__(self):
         self.image = load_image('grass.png')
 
     def draw(self):
         self.image.draw(400,30)
+
 
 class Boy:
 
@@ -58,6 +61,7 @@ def handle_events():
             running = False
         elif event.type == SDL_KEYDOWN and event.key == SDLK_ESCAPE:
             running = False
+
 
 # initialization code
 open_canvas()
