@@ -42,7 +42,7 @@ class Boy:
     def draw(self):
         self.image.clip_draw(self.frame * 100, 0, 100, 100, self.x, self.y)
 
-        
+
 def enter():
     global boy,grass
     boy = Boy()
