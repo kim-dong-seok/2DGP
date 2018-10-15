@@ -29,16 +29,13 @@ def handle_events():
 
 def draw():
     clear_canvas()
+
     if logo_time == 1:
         image.draw(400, 300)
-    main_state.boy.draw()
+
     main_state.grass.draw()
+    main_state.boy.draw()
     update_canvas()
-
-
-
-
-
 
 
 def update():
