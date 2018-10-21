@@ -8,7 +8,7 @@ from pico2d import *
 import game_framework
 import title_state
 import pause_state
-
+import main_state2
 
 name = "MainState"
 boy = None
@@ -117,6 +117,8 @@ def handle_events():
             game_framework.quit()
         elif event.type == SDL_KEYDOWN and event.key == SDLK_ESCAPE:
             game_framework.change_state(title_state)
+        elif event.type == SDL_KEYDOWN and event.key == SDLK_RIGHT:
+            game_framework.pop_state()
         elif event.type == SDL_MOUSEBUTTONDOWN and event.button == SDL_BUTTON_LEFT:
             mx = event.x
             my = event.y
