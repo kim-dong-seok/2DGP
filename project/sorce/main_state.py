@@ -15,26 +15,61 @@ boy = None
 swallow = None
 grass = None
 font = None
+money=None
+global playermoney
+playermoney=99999999
+global movemx, movemy
+movemx=-1
+movemy=-1
 global mx, my
 mx=-1
 my=-1
+class Money:
+    image1=None
+    image2=None
+    def __init__(self):
+        self.x, self.y = 0, 90
+        self.frame = 0
+        if Money.image1==None:
+            self.image1 = load_image('0123456789.png')
+        if Money.image2 == None:
+            self.image2 = load_image('money.png')
+
+    def update(self):
+        self.frame = (self.frame + 1) % 8
+
+
+    def draw(self):
+        self.image2.clip_draw(0, 0, 547, 75, 625 ,575,350,50 )
+        self.image1.clip_draw((playermoney%10)*24, 0, 24, 73, 708, 575, 15, 50)
+        self.image1.clip_draw(((playermoney%100)//10)*24, 0, 24, 73, 663, 575, 15, 50)
+        self.image1.clip_draw(((playermoney%1000)//100)*24, 0, 24, 73, 619, 575, 15, 50)
+        self.image1.clip_draw(((playermoney%10000)//1000)*24, 0, 24, 73, 603, 575, 15, 50)
+        self.image1.clip_draw(((playermoney%100000)//10000)*24, 0, 24, 73, 588, 575, 15, 50)
+        self.image1.clip_draw(((playermoney%1000000)//100000)*24, 0, 24, 73, 573, 575, 15, 50)
+        self.image1.clip_draw(((playermoney%10000000)//1000000)*24, 0, 24, 73, 557, 575, 15, 50)
+        self.image1.clip_draw(240, 0, 264, 73, 541, 575, 15, 50)
+        self.image1.clip_draw(240, 0, 264, 73, 526, 575, 15, 50)
+        self.image1.clip_draw(240, 0, 264, 73, 511, 575, 15, 50)
 class Swallow:
     image1 = None
     image2 = None
+    imagehp = None
     def __init__(self):
-        self.y = random.randint(0,600)
+        self.y = random.randint(0,500)
         self.x = random.randint(0,800)
         self.frame = 0
         self.xdir = 1
         self.ydir = 1
-        self.hp=1
+        self.hp=4
 
         if Swallow.image1 == None:
             Swallow.image1 = load_image('swallow.png')
 
         if Swallow.image2 == None:
             Swallow.image2 = load_image('swallow2.png')
-
+        if Swallow.imagehp == None:
+            Swallow.imagehp = load_image('hpbar.png')
     def update(self):
         global mx, my
         self.frame = (self.frame + 1) % 5
@@ -52,25 +87,35 @@ class Swallow:
         elif self.x <= 0:
             self.xdir = 1
 
-        if self.y >= 600:
+        if self.y >= 500:
             self.ydir = -1
         elif self.y <= 0:
             self.ydir = 1
 
     def draw(self):
+
         if self.hp>0:
             if self.xdir==1:
                 self.image1.clip_draw(self.frame * 42, 0, 42, 50, self.x, self.y)
             else:
                 self.image2.clip_draw(self.frame * 42, 0, 42, 50, self.x, self.y)
+        if self.hp < 3:
+            if self.hp >= 1:
+                self.imagehp.clip_draw(0, 0, 20, 10, self.x-20, self.y+20)
+                if self.hp >= 2:
+                    self.imagehp.clip_draw(0, 0, 20, 10, self.x, self.y + 20)
+                    if self.hp >= 3:
+                        self.imagehp.clip_draw(0, 0, 20, 10, self.x+20, self.y + 20)
 class Gourd:
     def __init__(self):
         self.image = load_image('field_gourd.jpg')
         self.y = 100
         self.x = 100
     def draw(self):
-        self.image.draw(self.x, self.y)
-
+        self.image.clip_draw(0, 0, 200, 200, 200, 200, 400, 400)
+        self.image.clip_draw(0, 0, 200, 200, 600, 200, 400, 400)
+        self.image.clip_draw(0, 0, 200, 200, 200, 600, 400, 400)
+        self.image.clip_draw(0, 0, 200, 200, 600, 600, 400, 400)
 
 class Boy:
     def __init__(self):
@@ -92,14 +137,16 @@ class Boy:
 
 
 def enter():
-    global gourd,birds
+    global gourd,birds,money
     gourd = Gourd()
+    money=Money()
     birds = [Swallow() for i in range(11)]
 
 def exit():
-    global gourd,birds
+    global gourd,birds,money
     del (birds)
     del (gourd)
+    del (money)
 
 
 def pause():
@@ -111,6 +158,7 @@ def resume():
 
 def handle_events():
     global mx, my
+    global movemx,movemy
     events = get_events()
     for event in events:
         if event.type == SDL_QUIT:
@@ -122,17 +170,28 @@ def handle_events():
         elif event.type == SDL_MOUSEBUTTONDOWN and event.button == SDL_BUTTON_LEFT:
             mx = event.x
             my = event.y
+        elif event.type == SDL_MOUSEMOTION:
+            movemx, movemy = event.x, 600 - event.y
 
 
 def update():
     for swallow in birds:
         swallow.update()
 
+
+
+
 def draw():
+
     clear_canvas()
+    image3 = load_image('fpscursor.png')
+    hide_cursor()
     gourd.draw()
+    money.draw()
     for swallow in birds:
         swallow.draw()
+
+    image3.clip_draw(0, 0, 108, 109, movemx, movemy, 50, 50)
     time.sleep(0.005)
     update_canvas()
 
