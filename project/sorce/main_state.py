@@ -14,6 +14,7 @@ name = "MainState"
 boy = None
 swallow = None
 grass = None
+windcursor = None
 font = None
 money=None
 global playermoney
@@ -24,33 +25,45 @@ movemy=-1
 global mx, my
 mx=-1
 my=-1
+
+class Windcursor:
+    image = None
+    image_fps =None
+    def __init__(self):
+        self.frame = 0
+        if Windcursor.image == None:
+            self.image = load_image('cursor.png')
+        if Windcursor.image_fps == None:
+            self.image_fps = load_image('fpscursor.png')
+    def update(self):
+        self.frame = (self.frame + 1) % 13
+
+
+    def draw(self):
+        if movemy>=500:
+            self.image.clip_draw(self.frame * 30, 0, 30, 45, movemx, movemy)
+        else:
+            self.image_fps.clip_draw(0, 0, 100, 100, movemx, movemy,30,30)
+
 class Money:
     image1=None
-    image2=None
     def __init__(self):
         self.x, self.y = 0, 90
         self.frame = 0
         if Money.image1==None:
-            self.image1 = load_image('0123456789.png')
-        if Money.image2 == None:
-            self.image2 = load_image('money.png')
+            self.image1 = load_image('0_9.png')
 
     def update(self):
-        self.frame = (self.frame + 1) % 8
-
+        pass
 
     def draw(self):
-        self.image2.clip_draw(0, 0, 547, 75, 625 ,575,350,50 )
-        self.image1.clip_draw((playermoney%10)*24, 0, 24, 73, 708, 575, 15, 50)
-        self.image1.clip_draw(((playermoney%100)//10)*24, 0, 24, 73, 663, 575, 15, 50)
-        self.image1.clip_draw(((playermoney%1000)//100)*24, 0, 24, 73, 619, 575, 15, 50)
-        self.image1.clip_draw(((playermoney%10000)//1000)*24, 0, 24, 73, 603, 575, 15, 50)
-        self.image1.clip_draw(((playermoney%100000)//10000)*24, 0, 24, 73, 588, 575, 15, 50)
-        self.image1.clip_draw(((playermoney%1000000)//100000)*24, 0, 24, 73, 573, 575, 15, 50)
-        self.image1.clip_draw(((playermoney%10000000)//1000000)*24, 0, 24, 73, 557, 575, 15, 50)
-        self.image1.clip_draw(240, 0, 264, 73, 541, 575, 15, 50)
-        self.image1.clip_draw(240, 0, 264, 73, 526, 575, 15, 50)
-        self.image1.clip_draw(240, 0, 264, 73, 511, 575, 15, 50)
+        self.image1.clip_draw(((playermoney%10)+1)*97, 0, 97, 145,692,568, 17, 28)
+        self.image1.clip_draw((((playermoney%100)//10)+1)*97, 0, 97, 145, 642, 568, 17, 28)
+        self.image1.clip_draw((((playermoney%1000)//100)+1)*97, 0, 97, 145, 584, 568, 17, 28)
+        self.image1.clip_draw((((playermoney%10000)//1000)+1)*97, 0, 97, 145, 566, 568, 17, 28)
+        self.image1.clip_draw((((playermoney%100000)//10000)+1)*97, 0, 97, 145, 548, 568, 17, 28)
+        self.image1.clip_draw((((playermoney%1000000)//100000)+1)*97, 0, 97, 145, 530, 568, 17, 28)
+        self.image1.clip_draw((((playermoney%10000000)//1000000)+1)*97, 0, 97, 145, 512, 568, 17, 28)
 class Swallow:
     image1 = None
     image2 = None
@@ -82,23 +95,23 @@ class Swallow:
                     mx=-1
                     my=-1
 
-        if self.x >= 800:
+        if self.x >= 750:
             self.xdir = -1
-        elif self.x <= 0:
+        elif self.x <= 50:
             self.xdir = 1
 
         if self.y >= 500:
             self.ydir = -1
-        elif self.y <= 0:
+        elif self.y <= 50:
             self.ydir = 1
 
     def draw(self):
 
         if self.hp>0:
             if self.xdir==1:
-                self.image1.clip_draw(self.frame * 42, 0, 42, 50, self.x, self.y)
+                self.image1.clip_draw(self.frame * 378, 0, 378, 523, self.x, self.y,50,50)
             else:
-                self.image2.clip_draw(self.frame * 42, 0, 42, 50, self.x, self.y)
+                self.image2.clip_draw(self.frame * 378, 0, 378, 523, self.x, self.y,50,50)
         if self.hp < 3:
             if self.hp >= 1:
                 self.imagehp.clip_draw(0, 0, 20, 10, self.x-20, self.y+20)
@@ -106,16 +119,14 @@ class Swallow:
                     self.imagehp.clip_draw(0, 0, 20, 10, self.x, self.y + 20)
                     if self.hp >= 3:
                         self.imagehp.clip_draw(0, 0, 20, 10, self.x+20, self.y + 20)
-class Gourd:
+class Main_UI:
     def __init__(self):
-        self.image = load_image('field_gourd.jpg')
-        self.y = 100
-        self.x = 100
+        self.image = load_image('main_ui.png')
+        self.y = 300
+        self.x = 400
     def draw(self):
-        self.image.clip_draw(0, 0, 200, 200, 200, 200, 400, 400)
-        self.image.clip_draw(0, 0, 200, 200, 600, 200, 400, 400)
-        self.image.clip_draw(0, 0, 200, 200, 200, 600, 400, 400)
-        self.image.clip_draw(0, 0, 200, 200, 600, 600, 400, 400)
+        self.image.clip_draw(0, 0, 800, 600, self.x,self.y,)
+
 
 class Boy:
     def __init__(self):
@@ -137,17 +148,18 @@ class Boy:
 
 
 def enter():
-    global gourd,birds,money
-    gourd = Gourd()
+    global main_ui,birds,money,windcursor
+    main_ui = Main_UI()
     money=Money()
+    windcursor=Windcursor()
     birds = [Swallow() for i in range(11)]
 
 def exit():
-    global gourd,birds,money
+    global main_ui,birds,money,windcursor
     del (birds)
-    del (gourd)
+    del (main_ui)
     del (money)
-
+    del (windcursor)
 
 def pause():
     pass
@@ -177,22 +189,19 @@ def handle_events():
 def update():
     for swallow in birds:
         swallow.update()
-
-
+    windcursor.update()
 
 
 def draw():
 
     clear_canvas()
-    image3 = load_image('fpscursor.png')
     hide_cursor()
-    gourd.draw()
+    main_ui.draw()
     money.draw()
     for swallow in birds:
         swallow.draw()
-
-    image3.clip_draw(0, 0, 108, 109, movemx, movemy, 50, 50)
-    time.sleep(0.005)
+    windcursor.draw()
+    time.sleep(0.03)
     update_canvas()
 
 
