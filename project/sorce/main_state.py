@@ -7,7 +7,7 @@ from pico2d import *
 
 import game_framework
 import title_state
-import pause_state
+import birdget_state
 import main_state2
 
 name = "MainState"
@@ -90,11 +90,13 @@ class Swallow:
         self.y += self.ydir
         if self.hp>0:
             if self.x+30>=mx and self.x-30<=mx:
-                if self.y+30>=600-my and self.y-30<=600-my:
+                if self.y+30>=my and self.y-30<=my:
                     self.hp-=1
                     mx=-1
                     my=-1
-
+        elif self.hp==0:
+            game_framework.push_state(birdget_state)
+            self.hp=-1
         if self.x >= 750:
             self.xdir = -1
         elif self.x <= 50:
@@ -181,7 +183,7 @@ def handle_events():
             game_framework.pop_state()
         elif event.type == SDL_MOUSEBUTTONDOWN and event.button == SDL_BUTTON_LEFT:
             mx = event.x
-            my = event.y
+            my = 600-event.y
         elif event.type == SDL_MOUSEMOTION:
             movemx, movemy = event.x, 600 - event.y
 
@@ -201,7 +203,7 @@ def draw():
     for swallow in birds:
         swallow.draw()
     windcursor.draw()
-    time.sleep(0.03)
+    delay(0.03)
     update_canvas()
 
 
