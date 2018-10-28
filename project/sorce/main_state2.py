@@ -20,6 +20,14 @@ money=None
 global birdget
 birdget=0
 
+class Main_Background:
+    def __init__(self):
+        self.image = load_image('main_background2.png')
+        self.y = 300
+        self.x = 400
+    def draw(self):
+        self.image.clip_draw(0, 0, 800, 600, self.x,self.y,)
+
 class Getbird:
     image = None
     image_fps =None
@@ -159,20 +167,22 @@ class Boy:
 
 
 def enter():
-    global main_ui,birds,money,windcursor,getbird
+    global main_ui,birds,money,windcursor,getbird,main_background
     getbird = Getbird()
     main_ui = Main_UI()
     money=Money()
+    main_background=Main_Background()
     windcursor=Windcursor()
     birds = [Swallow() for i in range(11)]
 
 def exit():
-    global main_ui,birds,money,windcursor,getbird
+    global main_ui,birds,money,windcursor,getbird,main_background
     del(getbird)
     del (birds)
     del (main_ui)
     del (money)
     del (windcursor)
+    del(main_background)
 
 def pause():
     pass
@@ -217,6 +227,7 @@ def draw():
 
     clear_canvas()
     hide_cursor()
+    main_background.draw()
     main_ui.draw()
     money.draw()
     for swallow in birds:

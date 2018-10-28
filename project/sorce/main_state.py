@@ -58,13 +58,13 @@ class Money:
         pass
 
     def draw(self):
-        self.image1.clip_draw(((playermoney%10)+1)*97, 0, 97, 145,692,568, 17, 28)
-        self.image1.clip_draw((((playermoney%100)//10)+1)*97, 0, 97, 145, 642, 568, 17, 28)
-        self.image1.clip_draw((((playermoney%1000)//100)+1)*97, 0, 97, 145, 584, 568, 17, 28)
-        self.image1.clip_draw((((playermoney%10000)//1000)+1)*97, 0, 97, 145, 566, 568, 17, 28)
-        self.image1.clip_draw((((playermoney%100000)//10000)+1)*97, 0, 97, 145, 548, 568, 17, 28)
-        self.image1.clip_draw((((playermoney%1000000)//100000)+1)*97, 0, 97, 145, 530, 568, 17, 28)
-        self.image1.clip_draw((((playermoney%10000000)//1000000)+1)*97, 0, 97, 145, 512, 568, 17, 28)
+        self.image1.clip_draw(((playermoney%10)+1)*97, 0, 97, 145,744,572, 17, 28)
+        self.image1.clip_draw((((playermoney%100)//10)+1)*97, 0, 97, 145, 700, 572, 17, 28)
+        self.image1.clip_draw((((playermoney%1000)//100)+1)*97, 0, 97, 145, 654, 572, 17, 28)
+        self.image1.clip_draw((((playermoney%10000)//1000)+1)*97, 0, 97, 145, 638, 572, 17, 28)
+        self.image1.clip_draw((((playermoney%100000)//10000)+1)*97, 0, 97, 145, 622, 572, 17, 28)
+        self.image1.clip_draw((((playermoney%1000000)//100000)+1)*97, 0, 97, 145, 606, 572, 17, 28)
+        self.image1.clip_draw((((playermoney%10000000)//1000000)+1)*97, 0, 97, 145, 590, 572, 17, 28)
 
 class Main_UI:
     def __init__(self):
