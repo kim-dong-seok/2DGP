@@ -1,5 +1,5 @@
 import game_framework
-import main_state
+import main_state2
 from pico2d import *
 
 
@@ -54,8 +54,8 @@ def draw():
     main_state.hide_cursor()
     main_state.main_ui.draw()
     main_state.money.draw()
-    for main_state.swallow in main_state.birds:
-        main_state.swallow.draw()
+    for main_state2.swallow in main_state2.birds:
+        main_state2.swallow.draw()
     getbird.draw()
     main_state.windcursor.image.clip_draw(main_state.windcursor.frame * 30, 0, 30, 45, main_state.movemx, main_state.movemy)
     delay(0.03)
