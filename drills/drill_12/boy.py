@@ -111,6 +111,7 @@ class SleepState:
         boy.count = 2.00
         boy.xycount=0.000
       
+        boy.opacify=1.00
     @staticmethod
     def exit(boy, event):
         pass
@@ -124,6 +125,7 @@ class SleepState:
             boy.image.clip_composite_draw(int(boy.frame) * 100, 300, 100, 100, 3.141592 / 2, '', boy.x - 25, boy.y - 25, 100, 100)
             if boy.count<=15.00:
                 boy.image2.clip_composite_draw(int(boy.frame) * 100, 300, 100, 100, 3.141592 / boy.count, '', boy.x-15+boy.xycount, boy.y-15+boy.xycount,100, 100)
+                boy.image2.opacify(boy.opacify)
                 boy.count+=0.01
                 boy.xycount+=0.01
 
@@ -131,10 +133,14 @@ class SleepState:
             boy.image.clip_composite_draw(int(boy.frame) * 100, 200, 100, 100, -3.141592 / 2, '', boy.x + 25, boy.y - 25, 100, 100)
             if boy.count<=15.00:
                 boy.image2.clip_composite_draw(int(boy.frame) * 100, 200, 100, 100, -3.141592 / boy.count, '', boy.x+15-boy.xycount, boy.y+15-boy.xycount,100, 100)
-
+                boy.image2.opacify(boy.opacify)
                 boy.count+=0.01
                 boy.xycount+=0.01
 
+        boy.opacify-=0.01
+
+        if boy.opacify<=0:
+            boy.opacify=1
 
 
 
