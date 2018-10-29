@@ -110,7 +110,12 @@ class SleepState:
         boy.frame2 = 0
         boy.count = 2.00
         boy.xycount=0.000
-      
+        boy.angle = 0
+        boy.r = 100
+        boy.rx=0
+        boy.ry=0
+        boy.i=270
+        boy.j=630
         boy.opacify=1.00
     @staticmethod
     def exit(boy, event):
@@ -128,7 +133,14 @@ class SleepState:
                 boy.image2.opacify(boy.opacify)
                 boy.count+=0.01
                 boy.xycount+=0.01
-
+            else:
+                if boy.i <= 630:
+                    boy.angle = boy.i * 3.14 / 180
+                    boy.image2.clip_draw(int(boy.frame) * 100, 300, 100, 100, boy.rx, boy.ry)
+                    boy.rx = boy.r * math.cos(boy.angle) + boy.x
+                    boy.ry = boy.r * math.sin(boy.angle) + boy.y+100
+                    boy.i +=  game_framework.frame_time*720
+                    boy.image2.opacify(boy.opacify)
         else:
             boy.image.clip_composite_draw(int(boy.frame) * 100, 200, 100, 100, -3.141592 / 2, '', boy.x + 25, boy.y - 25, 100, 100)
             if boy.count<=15.00:
@@ -136,9 +148,19 @@ class SleepState:
                 boy.image2.opacify(boy.opacify)
                 boy.count+=0.01
                 boy.xycount+=0.01
-
+            else:
+                if boy.j >= 270:
+                    boy.angle = boy.i * 3.14 / 180
+                    boy.image2.clip_draw(int(boy.frame) * 100, 200, 100, 100, boy.rx, boy.ry)
+                    boy.rx = boy.r * math.cos(boy.angle) + boy.x
+                    boy.ry = boy.r * math.sin(boy.angle) + boy.y+100
+                    boy.i +=  game_framework.frame_time*720
+                    boy.image2.opacify(boy.opacify)
         boy.opacify-=0.01
-
+        if boy.i>=630:
+            boy.i=270
+        if boy.j >= 270:
+            boy.j = 630
         if boy.opacify<=0:
             boy.opacify=1
 
