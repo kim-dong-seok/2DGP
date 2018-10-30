@@ -15,15 +15,40 @@ grass = None
 windcursor = None
 font = None
 money=None
+global confirm,expedition
+expedition=0
+confirm=0
+class Expedition_Confirm:
+    image = None
+    def __init__(self):
+        self.frame = 0
+        if Expedition_Confirm.image == None:
+            self.image = load_image('expedition.png')
+
+    def update(self):
+        pass
+
+    def draw(self):
+        self.image.clip_draw(0, 0, 800, 600,400 ,300)
 
 class Main_Background:
+    image = None
     def __init__(self):
-        self.image = load_image('cage.png')
+        if Main_Background.image==None:
+            self.image = load_image('cage.png')
         self.y = 300
         self.x = 400
     def draw(self):
         self.image.clip_draw(0, 0, 800, 600, self.x,self.y,)
-
+class Expeditioning:
+    image = None
+    def __init__(self):
+        if Expeditioning.image==None:
+            self.image = load_image('expeditioning.png')
+    def draw(self):
+        for i in range(1,6):
+            if main_state.cagebird[i].expedition== 1:
+                self.image.clip_draw(0, 0, 300, 300,170 ,458)
 class Draw_bird:
     def __init__(self):
         self.image = load_image('Chicken2.png')
@@ -97,20 +122,23 @@ class Boy:
 
 
 def enter():
-    global main_ui,money,windcursor,main_background,birddraw
+    global main_ui,money,windcursor,main_background,birddraw,expedition_confirm,expeditioning
     main_ui = Main_UI()
     money=Money()
     windcursor=Windcursor()
     main_background = Main_Background()
     birddraw=Draw_bird()
-
+    expedition_confirm=Expedition_Confirm()
+    expeditioning=Expeditioning()
 def exit():
-    global main_ui,money,windcursor,main_background,birddraw
+    global main_ui,money,windcursor,main_background,birddraw,expedition_confirm,expeditioning
     del (main_ui)
     del (money)
     del (windcursor)
     del (main_background)
     del (birddraw)
+    del (expedition_confirm)
+    del (expeditioning)
 def pause():
     pass
 
@@ -135,9 +163,20 @@ def handle_events():
 
 
 def update():
+    global confirm,expedition
     windcursor.update()
     if main_state.mx >= 335 and main_state.mx <= 465 and main_state.my >=22  and main_state.my <= 104:
         game_framework.pop_state()
+
+    if confirm>0:
+        if main_state.mx >= 246 and main_state.mx <= 354 and main_state.my >= 106 and main_state.my <= 175:
+            confirm=0
+        if main_state.mx >= 383 and main_state.mx <= 559 and main_state.my >= 106 and main_state.my <= 175:
+            expedition=1
+            main_state.cagebird[confirm].expedition=1
+            confirm=0
+    if main_state.mx >= 252 and main_state.mx <= 390 and main_state.my <= 420 and main_state.my >= 380:
+        confirm = 1
 
 def draw():
 
@@ -146,6 +185,10 @@ def draw():
     main_background.draw()
     money.draw()
     birddraw.draw()
+    if expedition>0:
+        expeditioning.draw()
+    if confirm>0:
+        expedition_confirm.draw()
     windcursor.draw()
     delay(0.03)
     update_canvas()

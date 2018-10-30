@@ -80,6 +80,7 @@ class Bird:
         self.name=0
         self.hp=0
         self.sp=0
+        self.expedition=0
 
     def update(self):
         pass

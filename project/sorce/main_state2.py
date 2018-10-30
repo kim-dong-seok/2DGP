@@ -218,12 +218,12 @@ def update():
     if birdget<1:
         for swallow in birds:
             swallow.update()
-
-    if main_state.mx >= 246 and main_state.mx <= 354 and main_state.my >= 106 and main_state.my <= 175:
-        birdget=0
-    if main_state.mx >= 383 and main_state.mx <= 559 and main_state.my >= 106 and main_state.my <= 175:
-        game_framework.change_state(cage_state)
-        birdget = 0
+    if birdget > 0:
+        if main_state.mx >= 246 and main_state.mx <= 354 and main_state.my >= 106 and main_state.my <= 175:
+            birdget=0
+        if main_state.mx >= 383 and main_state.mx <= 559 and main_state.my >= 106 and main_state.my <= 175:
+            game_framework.change_state(cage_state)
+            birdget = 0
 
 
 def draw():
