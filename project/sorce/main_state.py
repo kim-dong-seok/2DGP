@@ -75,39 +75,34 @@ class Main_UI:
         self.image.clip_draw(0, 0, 800, 600, self.x,self.y,)
 
 
-class Boy:
+class Bird:
     def __init__(self):
-        self.x, self.y = 0, 90
-        self.frame = 0
-        self.image = load_image('run_animation.png')
-        self.dir = 1
+        self.mame=0
+        self.hp=0
+        self.sp=0
 
     def update(self):
-        self.frame = (self.frame + 1) % 8
-        self.x += self.dir
-        if self.x >= 800:
-            self.dir = -1
-        elif self.x <= 0:
-            self.dir = 1
+        pass
 
     def draw(self):
-        self.image.clip_draw(self.frame * 100, 0, 100, 100, self.x, self.y)
+        pass
 
 
 def enter():
-    global main_ui,money,windcursor,main_background
+    global main_ui,money,windcursor,main_background,cagebird
     main_ui = Main_UI()
     money=Money()
     main_background=Main_Background()
     windcursor=Windcursor()
-
+    cagebird=[Bird() for i in range(6)]
 
 def exit():
-    global main_ui,money,windcursor,main_background
+    global main_ui,money,windcursor,main_background,cagebird
     del (main_ui)
     del (money)
     del (windcursor)
     del(main_background)
+    del(cagebird)
 def pause():
     pass
 

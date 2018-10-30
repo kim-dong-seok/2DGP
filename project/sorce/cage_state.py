@@ -16,6 +16,21 @@ windcursor = None
 font = None
 money=None
 
+class Main_Background:
+    def __init__(self):
+        self.image = load_image('cage.png')
+        self.y = 300
+        self.x = 400
+    def draw(self):
+        self.image.clip_draw(0, 0, 800, 600, self.x,self.y,)
+
+class Draw_bird:
+    def __init__(self):
+        self.image = load_image('Chicken2.png')
+        self.y = 300
+        self.x = 400
+    def draw(self):
+        self.image.clip_draw(0, 0, 800, 600, self.x,self.y,)
 
 class Windcursor:
     image = None
@@ -43,13 +58,13 @@ class Money:
         pass
 
     def draw(self):
-        self.image1.clip_draw(((main_state.playermoney%10)+1)*97, 0, 97, 145,692,568, 17, 28)
-        self.image1.clip_draw((((main_state.playermoney%100)//10)+1)*97, 0, 97, 145, 642, 568, 17, 28)
-        self.image1.clip_draw((((main_state.playermoney%1000)//100)+1)*97, 0, 97, 145, 584, 568, 17, 28)
-        self.image1.clip_draw((((main_state.playermoney%10000)//1000)+1)*97, 0, 97, 145, 566, 568, 17, 28)
-        self.image1.clip_draw((((main_state.playermoney%100000)//10000)+1)*97, 0, 97, 145, 548, 568, 17, 28)
-        self.image1.clip_draw((((main_state.playermoney%1000000)//100000)+1)*97, 0, 97, 145, 530, 568, 17, 28)
-        self.image1.clip_draw((((main_state.playermoney%10000000)//1000000)+1)*97, 0, 97, 145, 512, 568, 17, 28)
+        self.image1.clip_draw(((main_state.playermoney % 10) + 1) * 97, 0, 97, 145, 744, 572, 17, 28)
+        self.image1.clip_draw((((main_state.playermoney % 100) // 10) + 1) * 97, 0, 97, 145, 700, 572, 17, 28)
+        self.image1.clip_draw((((main_state.playermoney % 1000) // 100) + 1) * 97, 0, 97, 145, 654, 572, 17, 28)
+        self.image1.clip_draw((((main_state.playermoney % 10000) // 1000) + 1) * 97, 0, 97, 145, 638, 572, 17, 28)
+        self.image1.clip_draw((((main_state.playermoney % 100000) // 10000) + 1) * 97, 0, 97, 145, 622, 572, 17, 28)
+        self.image1.clip_draw((((main_state.playermoney % 1000000) // 100000) + 1) * 97, 0, 97, 145, 606, 572, 17, 28)
+        self.image1.clip_draw((((main_state.playermoney % 10000000) // 1000000) + 1) * 97, 0, 97, 145, 590, 572, 17, 28)
 
 class Main_UI:
     def __init__(self):
@@ -80,18 +95,19 @@ class Boy:
 
 
 def enter():
-    global main_ui,money,windcursor
+    global main_ui,money,windcursor,main_background
     main_ui = Main_UI()
     money=Money()
     windcursor=Windcursor()
+    main_background = Main_Background()
 
 
 def exit():
-    global main_ui,money,windcursor
+    global main_ui,money,windcursor,main_background
     del (main_ui)
     del (money)
     del (windcursor)
-
+    del (main_background)
 def pause():
     pass
 
@@ -123,7 +139,7 @@ def draw():
 
     clear_canvas()
     hide_cursor()
-    main_ui.draw()
+    main_background.draw()
     money.draw()
     windcursor.draw()
     delay(0.03)

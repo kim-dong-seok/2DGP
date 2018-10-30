@@ -73,13 +73,13 @@ class Money:
         pass
 
     def draw(self):
-        self.image1.clip_draw(((main_state.playermoney%10)+1)*97, 0, 97, 145,692,568, 17, 28)
-        self.image1.clip_draw((((main_state.playermoney%100)//10)+1)*97, 0, 97, 145, 642, 568, 17, 28)
-        self.image1.clip_draw((((main_state.playermoney%1000)//100)+1)*97, 0, 97, 145, 584, 568, 17, 28)
-        self.image1.clip_draw((((main_state.playermoney%10000)//1000)+1)*97, 0, 97, 145, 566, 568, 17, 28)
-        self.image1.clip_draw((((main_state.playermoney%100000)//10000)+1)*97, 0, 97, 145, 548, 568, 17, 28)
-        self.image1.clip_draw((((main_state.playermoney%1000000)//100000)+1)*97, 0, 97, 145, 530, 568, 17, 28)
-        self.image1.clip_draw((((main_state.playermoney%10000000)//1000000)+1)*97, 0, 97, 145, 512, 568, 17, 28)
+        self.image1.clip_draw(((main_state.playermoney % 10) + 1) * 97, 0, 97, 145, 744, 572, 17, 28)
+        self.image1.clip_draw((((main_state.playermoney % 100) // 10) + 1) * 97, 0, 97, 145, 700, 572, 17, 28)
+        self.image1.clip_draw((((main_state.playermoney % 1000) // 100) + 1) * 97, 0, 97, 145, 654, 572, 17, 28)
+        self.image1.clip_draw((((main_state.playermoney % 10000) // 1000) + 1) * 97, 0, 97, 145, 638, 572, 17, 28)
+        self.image1.clip_draw((((main_state.playermoney % 100000) // 10000) + 1) * 97, 0, 97, 145, 622, 572, 17, 28)
+        self.image1.clip_draw((((main_state.playermoney % 1000000) // 100000) + 1) * 97, 0, 97, 145, 606, 572, 17, 28)
+        self.image1.clip_draw((((main_state.playermoney % 10000000) // 1000000) + 1) * 97, 0, 97, 145, 590, 572, 17, 28)
 class Swallow:
     image1 = None
     image2 = None
@@ -113,6 +113,9 @@ class Swallow:
                     main_state.my=-1
         elif self.hp==0:
             birdget=1
+            main_state.cagebird[1].mame=1
+            main_state.cagebird[1].hp = 50
+            main_state.cagebird[1].sp = 30
             self.hp=-1
         if self.x >= 750:
             self.xdir = -1
