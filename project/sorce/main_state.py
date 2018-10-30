@@ -77,7 +77,7 @@ class Main_UI:
 
 class Bird:
     def __init__(self):
-        self.mame=0
+        self.name=0
         self.hp=0
         self.sp=0
 

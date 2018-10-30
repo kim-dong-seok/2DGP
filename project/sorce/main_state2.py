@@ -113,7 +113,7 @@ class Swallow:
                     main_state.my=-1
         elif self.hp==0:
             birdget=1
-            main_state.cagebird[1].mame=1
+            main_state.cagebird[1].name =1
             main_state.cagebird[1].hp = 50
             main_state.cagebird[1].sp = 30
             self.hp=-1

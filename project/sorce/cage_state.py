@@ -27,11 +27,13 @@ class Main_Background:
 class Draw_bird:
     def __init__(self):
         self.image = load_image('Chicken2.png')
-        self.y = 300
-        self.x = 400
+        self.font = load_font('Gungsuh.TTF', 20)
     def draw(self):
-        self.image.clip_draw(0, 0, 800, 600, self.x,self.y,)
-
+        if main_state.cagebird[1].name>=1:
+            self.image.clip_draw(0, 0, 210, 164, 162,440,60,60)
+        self.font.draw(220,463, '상처입은 닭둘기', (255, 255, 255))
+        self.font.draw(220, 440, '체력: %d'%main_state.cagebird[1].hp, (255, 255, 255))
+        self.font.draw(300, 440, '기력: %d' % main_state.cagebird[1].sp, (255, 255, 255))
 class Windcursor:
     image = None
     def __init__(self):
@@ -95,19 +97,20 @@ class Boy:
 
 
 def enter():
-    global main_ui,money,windcursor,main_background
+    global main_ui,money,windcursor,main_background,birddraw
     main_ui = Main_UI()
     money=Money()
     windcursor=Windcursor()
     main_background = Main_Background()
-
+    birddraw=Draw_bird()
 
 def exit():
-    global main_ui,money,windcursor,main_background
+    global main_ui,money,windcursor,main_background,birddraw
     del (main_ui)
     del (money)
     del (windcursor)
     del (main_background)
+    del (birddraw)
 def pause():
     pass
 
@@ -133,7 +136,8 @@ def handle_events():
 
 def update():
     windcursor.update()
-
+    if main_state.mx >= 335 and main_state.mx <= 465 and main_state.my >=22  and main_state.my <= 104:
+        game_framework.pop_state()
 
 def draw():
 
@@ -141,6 +145,7 @@ def draw():
     hide_cursor()
     main_background.draw()
     money.draw()
+    birddraw.draw()
     windcursor.draw()
     delay(0.03)
     update_canvas()
