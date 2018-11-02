@@ -15,6 +15,8 @@ grass = None
 windcursor = None
 font = None
 money=None
+global click
+cclick=0
 global playermoney
 playermoney=99999999
 global movemx, movemy
@@ -87,44 +89,187 @@ class Bird:
 
     def draw(self):
         pass
+class Have_Seed:
+    image1 = None
+    def __init__(self):
+        self.name=0
+        if Have_Seed.image1 == None:
+            self.image1 = load_image('seed_1.png')
+        self.count=0
+
+    def update(self):
+        pass
+
+    def draw(self):
+        pass
+class Seed_Information:
+    image1 = None
+    def __init__(self):
+        if Seed_Information.image1 == None:
+            self.image1 = load_image('seed_information.png')
+
+
+    def update(self):
+        pass
+
+    def draw(self):
+        self.image.clip_draw(0, 0, 200, 100, self.screenx + 100, self.screeny + 50, 200, 100)
 
 class Field_State:
     image = None
-
+    image2 = None
+    image3 = None
     def __init__(self):
         self.frame = 0
+        self.seedkind=0
         self.font = load_font('Gungsuh.TTF', 20)
-        self.font2 = load_font('Gungsuh.TTF', 17)
+        self.font2 = load_font('Gungsuh.TTF', 18)
         self.font3 = load_font('Gungsuh.TTF', 15)
+        self.font4 = load_font('Gungsuh.TTF', 13)
         if Field_State.image == None:
             self.image = load_image('field_state.png')
+        if Field_State.image2 == None:
+            self.image2 = load_image('seed_select.png')
+        if Field_State.image3 == None:
+            self.image3 = load_image('plant_check.png')
         self.x=0
         self.y=0
-        self.mcheck=0
-        self.fcheck=0
+        self.screenx=0
+        self.screeny = 0
+        self.screenx2 = 0
+        self.screeny2 = 0
+        self.mcheck=0 #마우스 체크
+        self.fcheck=0 #필드 체크
+        self.pcheck=0 #심을지 확인
+        self.scheck=0 #박씨 정보 확인
+        self.plant_part1=0 #발아기
+        self.plant_part2 = 0 #성장기
+        self.plant_part3 = 0 #성숙기
+        self.fcount=0
+        self.cclick=0
+        self.part1_fcheck=0
+        self.part2_fcheck = 0
+        self.part3_fcheck = 0
     def update(self):
-        if self.x > 0 and self.x<movemx and self.x+114 >movemx:
-            if self.y > 0 and self.y < movemy and self.y + 114 > movemy:
-                self.mcheck=1
-            else:
+        for field_state in field:
+            if field_state.fcheck < 1:
+                self.fcount += 1
+        if self.fcount==3:
+            if self.fcheck < 1:
+                if self.x > 0 and self.x<movemx and self.x+114 >movemx:
+                    if self.y > 0 and self.y < movemy and self.y + 114 > movemy:
+                        self.mcheck=1
+                        self.screenx=movemx
+                        self.screeny = movemy
+                    else:
+                        self.mcheck = 0
+                else:
+                    self.mcheck=0
+
+
+                if self.x > 0 and self.x<mx and self.x+114 >mx and self.cclick !=mx:
+                    if self.y > 0 and self.y < my and self.y + 114 > my:
+                        self.fcheck = 1
+                        self.mcheck = 0
+                        self.screenx = mx
+                        self.screeny = my
+                        self.cclick =0
+        self.fcount=0;
+        if self.x > 0 and self.screenx-85 < mx and self.screenx -14 > mx:
+            if self.y > 0 and self.screeny-100 < my and self.screeny -51 > my:
+                self.fcheck = 0
                 self.mcheck = 0
+                self.screenx = 0
+                self.screeny = 0
+                self.cclick =mx
+
+        if self.x > 0 and self.screenx-107 < movemx and self.screenx -57 > movemx :
+            if self.y > 0 and self.screeny+15 < movemy and self.screeny +65 > movemy:
+                self.scheck = 1
+                self.screenx2 = movemx
+                self.screeny2 = movemy
+            else:
+                self.scheck = 0
         else:
-            self.mcheck=0
+            self.scheck = 0
+
+        if self.x > 0 and self.screenx+85 > mx and self.screenx +14 < mx :
+            if self.y > 0 and self.screeny-100 < my and self.screeny -51 > my:
+                self.pcheck=1
+                self.screenx2 = mx
+                self.screeny2 = my
+
+
+        if self.x > 0 and self.screenx2-85 < mx and self.screenx2 -14 > mx:
+            if self.y > 0 and self.screeny2+100-57 < my and self.screeny2+100 -14 > my:
+                self.pcheck = 0
+                self.screenx2 = 0
+                self.screeny2 = 0
+
+        if self.x > 0 and self.screenx2+85 > mx and self.screenx2 +14 < mx :
+            if self.y > 0 and self.screeny2+100-57 < my and self.screeny2+100 -14 > my:
+                self.pcheck=0
+                self.screenx2 = 0
+                self.screeny2 = 0
+                self.fcheck=0
+                self.plant_part1=1
+        if self.plant_part1==1:
+            if self.x > 0 and self.x < movemx and self.x + 114 > movemx:
+                if self.y > 0 and self.y < movemy and self.y + 114 > movemy:
+                    self.part1_fcheck = 1
+                    self.screenx = movemx
+                    self.screeny = movemy
+                else:
+                    self.part1_fcheck = 0
+            else:
+                self.part1_fcheck = 0
     def draw(self):
-        if self.mcheck==1:
-            self.image.clip_draw(0, 0, 200 , 100, movemx+100,movemy+50,200,100)
+        if self.mcheck==1 and self.plant_part1==0:
+            self.image.clip_draw(0, 0, 200 , 100, self.screenx+100,self.screeny+50,200,100)
             if self.fcheck==0:
-                self.font.draw(movemx+5,movemy+80 , '집앞 밭', (255, 255, 255))
-                self.font2.draw(movemx + 5, movemy + 55, '상태: 재배가능', (0, 255, 0))
-                self.font3.draw(movemx + 5, movemy + 35, '밭을 클릭하여 재배할', (255, 255, 0))
-                self.font3.draw(movemx + 5, movemy + 16, '작물을 선택하세요', (255, 255, 0))
+                self.font.draw(self.screenx+5,self.screeny+80 , '집앞 밭', (255, 255, 255))
+                self.font2.draw(self.screenx + 5, self.screeny + 55, '상태: 재배가능', (0, 255, 0))
+                self.font3.draw(self.screenx + 5, self.screeny + 35, '밭을 클릭하여 재배할', (255, 255, 0))
+                self.font3.draw(self.screenx + 5, self.screeny + 16, '작물을 선택하세요', (255, 255, 0))
+        if self.fcheck==1:
+            self.image2.clip_draw(0, 0, 282, 274, self.screenx , self.screeny )
+            for have_seed in seeds:
+                if have_seed.name>0 and have_seed.count>0:
+                    have_seed.image1.clip_draw(0, 0, 109, 120, self.screenx-82,self.screeny+40,50,50)
+                    self.seedkind+=1
+        if self.scheck==1 and self.plant_part1==0:
+            seed_information.image1.clip_draw(0, 0, 256 , 219, self.screenx2+150,self.screeny2-50,256,219)
+            have_seed.image1.clip_draw(0, 0, 109, 120, self.screenx2 +57, self.screeny2 +25, 50, 50)
+            self.font.draw(self.screenx2+100,self.screeny2+25 , '평범한 박 씨앗', (255, 255, 255))
+            self.font2.draw(self.screenx2 + 30, self.screeny2-20, '생장주기:', (0, 255, 0))
+            self.font2.draw(self.screenx2 + 30, self.screeny2 - 40, '[발아기] 10초', (0, 255, 0))
+            self.font2.draw(self.screenx2 + 30, self.screeny2 - 60, '[성장기] 2분', (0, 255, 0))
+            self.font2.draw(self.screenx2 + 30, self.screeny2 - 80, '[성숙기] 10분', (0, 255, 0))
+            self.font3.draw(self.screenx2 + 30, self.screeny2 - 100, '누가 봐도 평범해 보이는 박의 씨앗', (255, 255, 0))
+            self.font4.draw(self.screenx2 + 30, self.screeny2 - 128, '주의: 발아기, 성장기에 정성껏 돌보면', (255, 255, 0))
+            self.font4.draw(self.screenx2 + 30, self.screeny2 - 146, '성숙기에 더 좋은 보상을 받을 수 있다', (255, 255, 0))
+
+        if self.pcheck==1:
+            self.image3.clip_draw(0, 0, 266, 166, self.screenx2 , self.screeny2+100 )
+            self.font2.draw(self.screenx2 - 85, self.screeny2 + 135, '평범한 박 씨앗 작물을', (0, 0, 0))
+            self.font2.draw(self.screenx2 - 85, self.screeny2 + 115, '재배하시겠습니까?', (0, 0, 0))
+        if self.part1_fcheck==1:
+            self.image.clip_draw(0, 0, 200 , 100, self.screenx+100,self.screeny+50,200,100)
+            if self.fcheck==0:
+                self.font.draw(self.screenx+5,self.screeny+80 , '평범한 박 씨앗', (255, 255, 255))
+                self.font2.draw(self.screenx + 5, self.screeny + 55, '발아기:', (255, 255, 255))
+                self.font2.draw(self.screenx + 75, self.screeny + 55, '10초(남음)', (0, 255, 0))
+                self.font2.draw(self.screenx + 5 ,self.screeny + 35, '생명력:', (255, 255, 255))
+                self.font2.draw(self.screenx + 75, self.screeny + 35, '나쁨(하)', (255, 255, 0))
+                self.font2.draw(self.screenx + 5, self.screeny + 16, '상태: 성장 중', (255, 255, 255))
 
 def enter():
-    global main_ui,money,windcursor,main_background,cagebird,field
+    global main_ui,money,windcursor,main_background,cagebird,field,seeds,seed_information
     main_ui = Main_UI()
     money=Money()
     main_background=Main_Background()
     windcursor=Windcursor()
+    seed_information=Seed_Information()
     field=[Field_State() for i in range(3)]
     field[0].x = 312
     field[0].y = 378
@@ -133,15 +278,20 @@ def enter():
     field[2].x = 490
     field[2].y = 186
     cagebird=[Bird() for i in range(6)]
+    seeds=[Have_Seed() for i in range(10)]
+    seeds[0].name=1
+    seeds[0].count = 3
 
 def exit():
-    global main_ui,money,windcursor,main_background,cagebird,field
+    global main_ui,money,windcursor,main_background,cagebird,field,seeds,seed_information
     del (main_ui)
     del (money)
     del (windcursor)
     del(main_background)
     del(cagebird)
     del(field)
+    del(seeds)
+    del(seed_information)
 def pause():
     pass
 
@@ -151,7 +301,7 @@ def resume():
 
 def handle_events():
     global mx, my
-    global movemx,movemy
+    global movemx,movemy,cclick
     events = get_events()
     for event in events:
         if event.type == SDL_QUIT:
@@ -163,6 +313,9 @@ def handle_events():
         elif event.type == SDL_MOUSEBUTTONDOWN and event.button == SDL_BUTTON_LEFT:
             mx = event.x
             my = 600-event.y
+            cclick=1
+        elif event.type == SDL_MOUSEBUTTONUP and event.button == SDL_BUTTON_LEFT:
+            cclick=0
         elif event.type == SDL_MOUSEMOTION:
             movemx, movemy = event.x, 600 - event.y
 
@@ -171,7 +324,6 @@ def update():
     windcursor.update()
     for field_state in field:
         field_state.update()
-
 def draw():
 
     clear_canvas()
