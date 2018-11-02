@@ -20,6 +20,7 @@ money=None
 global birdget
 birdget=0
 
+
 class Main_Background:
     def __init__(self):
         self.image = load_image('main_background2.png')
@@ -143,7 +144,7 @@ class Swallow:
                         self.imagehp.clip_draw(0, 0, 20, 10, self.x+20, self.y + 20)
 class Main_UI:
     def __init__(self):
-        self.image = load_image('main_ui.png')
+        self.image = load_image('main_ui2.png')
         self.y = 300
         self.x = 400
     def draw(self):

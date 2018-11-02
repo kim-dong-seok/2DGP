@@ -44,7 +44,7 @@ class Windcursor:
 
 
     def draw(self):
-            self.image.clip_draw(self.frame * 30, 0, 30, 45, movemx, movemy)
+            self.image.clip_draw(self.frame * 30, 0, 30, 45, movemx, movemy-20)
 
 class Money:
     image1=None
@@ -88,22 +88,60 @@ class Bird:
     def draw(self):
         pass
 
+class Field_State:
+    image = None
+
+    def __init__(self):
+        self.frame = 0
+        self.font = load_font('Gungsuh.TTF', 20)
+        self.font2 = load_font('Gungsuh.TTF', 17)
+        self.font3 = load_font('Gungsuh.TTF', 15)
+        if Field_State.image == None:
+            self.image = load_image('field_state.png')
+        self.x=0
+        self.y=0
+        self.mcheck=0
+        self.fcheck=0
+    def update(self):
+        if self.x > 0 and self.x<movemx and self.x+114 >movemx:
+            if self.y > 0 and self.y < movemy and self.y + 114 > movemy:
+                self.mcheck=1
+            else:
+                self.mcheck = 0
+        else:
+            self.mcheck=0
+    def draw(self):
+        if self.mcheck==1:
+            self.image.clip_draw(0, 0, 200 , 100, movemx+100,movemy+50,200,100)
+            if self.fcheck==0:
+                self.font.draw(movemx+5,movemy+80 , '집앞 밭', (255, 255, 255))
+                self.font2.draw(movemx + 5, movemy + 55, '상태: 재배가능', (0, 255, 0))
+                self.font3.draw(movemx + 5, movemy + 35, '밭을 클릭하여 재배할', (255, 255, 0))
+                self.font3.draw(movemx + 5, movemy + 16, '작물을 선택하세요', (255, 255, 0))
 
 def enter():
-    global main_ui,money,windcursor,main_background,cagebird
+    global main_ui,money,windcursor,main_background,cagebird,field
     main_ui = Main_UI()
     money=Money()
     main_background=Main_Background()
     windcursor=Windcursor()
+    field=[Field_State() for i in range(3)]
+    field[0].x = 312
+    field[0].y = 378
+    field[1].x = 312
+    field[1].y = 186
+    field[2].x = 490
+    field[2].y = 186
     cagebird=[Bird() for i in range(6)]
 
 def exit():
-    global main_ui,money,windcursor,main_background,cagebird
+    global main_ui,money,windcursor,main_background,cagebird,field
     del (main_ui)
     del (money)
     del (windcursor)
     del(main_background)
     del(cagebird)
+    del(field)
 def pause():
     pass
 
@@ -131,7 +169,8 @@ def handle_events():
 
 def update():
     windcursor.update()
-
+    for field_state in field:
+        field_state.update()
 
 def draw():
 
@@ -140,6 +179,8 @@ def draw():
     main_background.draw()
     main_ui.draw()
     money.draw()
+    for field_state in field:
+        field_state.draw()
     windcursor.draw()
     delay(0.03)
     update_canvas()
