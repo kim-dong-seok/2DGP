@@ -315,13 +315,13 @@ class Field_State:
 
     def draw(self):
         if self.plant_part1==1 and self.part1_clock/2 >(get_time() - self.first_time1):
-            self.image5.clip_draw(0, 0, 51, 49, self.x+57, self.y+57, 50, 50)
+            self.image5.clip_draw(0, 0, 51, 49, self.x+65, self.y+75, 40, 40)
         elif self.plant_part1==1:
-            self.image6.clip_draw(0, 0, 51, 49, self.x+57, self.y+57, 50, 50)
+            self.image6.clip_draw(0, 0, 70, 69, self.x+54, self.y+85, 70, 70)
         if self.plant_part2==1:
-            self.image7.clip_draw(0, 0, 296, 296, self.x + 57, self.y + 57, 50+(get_time() - self.first_time1)/2, 50+(get_time() - self.first_time1)/2)
+            self.image7.clip_draw(0, 0, 296, 296, self.x + 57, self.y + 70, 50+(get_time() - self.first_time1)/2, 50+(get_time() - self.first_time1)/2)
         if self.plant_part3 == 1:
-            self.image7.clip_draw(0, 0, 296, 296, self.x + 57, self.y + 57, 50 + 30,50 +30)
+            self.image7.clip_draw(0, 0, 296, 296, self.x + 57, self.y + 70, 50 + 30,50 +30)
         if self.mcheck==1:
             self.image.clip_draw(0, 0, 200 , 100, self.screenx+100,self.screeny+50,200,100)
             if self.fcheck==0 and self.plant_part1==0:
