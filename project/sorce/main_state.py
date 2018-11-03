@@ -114,12 +114,29 @@ class Seed_Information:
 
     def draw(self):
         self.image.clip_draw(0, 0, 200, 100, self.screenx + 100, self.screeny + 50, 200, 100)
-
+class Draw_Plant:
+    image1 = None
+    image2 = None
+    def __init__(self):
+        if Field_State.image == None:
+            self.image1 = load_image('plant_part1_1.png')
+        if Field_State.image2 == None:
+            self.image2 = load_image('plant_part1_2.png')
+        self.x=0
+        self.y=0
+    def update(self):
+        pass
+    def draw(self):
+        self.image1.clip_draw(0, 0, 51,49, self.x, self.y, 50, 50)
+        #self.image2.clip_draw(0, 0, 70, 69, self.x, self.y, 70, 70)
 class Field_State:
     image = None
     image2 = None
     image3 = None
-    image3 = None
+    image4 = None
+    image5 = None
+    image6 = None
+    image7 = None
     def __init__(self):
         self.frame = 0
         self.seedkind=0
@@ -133,8 +150,14 @@ class Field_State:
             self.image2 = load_image('seed_select.png')
         if Field_State.image3 == None:
             self.image3 = load_image('plant_check.png')
-        if Field_State.image3 == None:
+        if Field_State.image4 == None:
             self.image4 = load_image('seed_click.png')
+        if Field_State.image5 == None:
+            self.image5 = load_image('plant_part1_1.png')
+        if Field_State.image6 == None:
+            self.image6 = load_image('plant_part1_2.png')
+        if Field_State.image7 == None:
+            self.image7 = load_image('gourd_stand.png')
         self.x=0
         self.y=0
         self.screenx=0
@@ -163,32 +186,85 @@ class Field_State:
         self.part3_fcheck = 0
     def update(self):
         global cclick
+        plant.x=self.x+57
+        plant.y = self.y + 57
         for field_state in field:
             if field_state.fcheck < 1:
                 self.fcount += 1
-        if self.plant_part1 == 0:
-            if self.fcount == 3:
+        if self.fcount == 3:
+            if self.plant_part1 == 1 and self.plant_part2 == 0:
 
+                if self.x > 0 and self.x < movemx and self.x + 114 > movemx:
+                    if self.y > 0 and self.y < movemy and self.y + 114 > movemy:
+                        self.part1_fcheck = 1
+                        self.screenx = movemx
+                        self.screeny = movemy
+
+                    else:
+                        self.part1_fcheck = 0
+                else:
+                    self.part1_fcheck = 0
+                if self.part1_clock - (get_time() - self.first_time1) < 0:
+                    self.part1_fcheck = 0
+                    self.plant_part2 = 1
+                    self.plant_part1 = 2
+                    self.first_time1 = get_time()
+
+            if self.plant_part1 == 2 and self.plant_part2 == 1:
+                if self.x > 0 and self.x < movemx and self.x + 114 > movemx:
+                    if self.y > 0 and self.y < movemy and self.y + 114 > movemy:
+                        self.part2_fcheck = 1
+                        self.screenx = movemx
+                        self.screeny = movemy
+
+                    else:
+                        self.part2_fcheck = 0
+                else:
+                    self.part2_fcheck = 0
+                if self.part2_clock - (get_time() - self.first_time1) < 0:
+                    self.part2_fcheck = 0
+                    self.plant_part3 = 1
+                    self.plant_part2 = 2
+                    self.first_time1 = get_time()
+
+            if self.plant_part1 == 2 and self.plant_part2 == 2 and self.plant_part3 == 1:
+                if self.x > 0 and self.x < movemx and self.x + 114 > movemx:
+                    if self.y > 0 and self.y < movemy and self.y + 114 > movemy:
+                        self.part3_fcheck = 1
+                        self.screenx = movemx
+                        self.screeny = movemy
+
+                    else:
+                        self.part3_fcheck = 0
+                else:
+                    self.part3_fcheck = 0
+                if self.part3_clock - (get_time() - self.first_time1) < 0:
+                    self.part2_fcheck = 0
+                    self.plant_part3 = 1
+                    self.plant_part2 = 2
+                    self.first_time1 = get_time()
+
+            if self.plant_part1 == 0:
                 if self.fcheck < 1:
-                    if self.x > 0 and self.x<movemx and self.x+114 >movemx:
+                    if self.x > 0 and self.x < movemx and self.x + 114 > movemx:
                         if self.y > 0 and self.y < movemy and self.y + 114 > movemy:
-                            self.mcheck=1
-                            self.screenx=movemx
+                            self.mcheck = 1
+                            self.screenx = movemx
                             self.screeny = movemy
                         else:
                             self.mcheck = 0
                     else:
-                        self.mcheck=0
+                        self.mcheck = 0
 
-
-                    if self.x > 0 and self.x<mx and self.x+114 >mx and cclick ==1:  #씨앗선택창
+                    if self.x > 0 and self.x < mx and self.x + 114 > mx and cclick == 1:  # 씨앗선택창
                         if self.y > 0 and self.y < my and self.y + 114 > my:
                             self.fcheck = 1
                             self.mcheck = 0
                             self.screenx = mx
                             self.screeny = my
-                            self.cclick =0
-            self.fcount = 0;
+                            self.cclick = 0
+        self.fcount = 0;
+        if self.plant_part1 == 0:
             if self.x > 0 and self.screenx-85 < mx and self.screenx -14 > mx:     #씨앗선택창 취소
                 if self.y > 0 and self.screeny-100 < my and self.screeny -51 > my:
                     self.fcheck = 0
@@ -234,53 +310,18 @@ class Field_State:
                     self.first_time1=get_time()
                     cclick=0
 
-        if self.plant_part1==1and self.plant_part2==0:
 
-            if self.x > 0 and self.x < movemx and self.x + 114 > movemx:
-                if self.y > 0 and self.y < movemy and self.y + 114 > movemy:
-                    self.part1_fcheck = 1
-                    self.screenx = movemx
-                    self.screeny = movemy
 
-                else:
-                    self.part1_fcheck = 0
-            else:
-                self.part1_fcheck = 0
-            if self.part1_clock - (get_time() - self.first_time1) < 0:
-                self.part1_fcheck = 0
-                self.plant_part2 = 1
-                self.plant_part1 = 2
-                self.first_time1 = get_time()
 
-        if self.plant_part1==2 and self.plant_part2 == 1:
-            if self.x > 0 and self.x < movemx and self.x + 114 > movemx:
-                if self.y > 0 and self.y < movemy and self.y + 114 > movemy:
-                    self.part2_fcheck = 1
-                    self.screenx = movemx
-                    self.screeny = movemy
-
-                else:
-                    self.part2_fcheck = 0
-            else:
-                self.part2_fcheck = 0
-            if self.part2_clock - (get_time() - self.first_time1) < 0:
-                self.part2_fcheck = 0
-                self.plant_part3 = 1
-                self.plant_part2 = 2
-                self.first_time1 = get_time()
-
-        if self.plant_part1==2 and self.plant_part2 == 2 and self.plant_part3 == 1 :
-            if self.x > 0 and self.x < movemx and self.x + 114 > movemx:
-                if self.y > 0 and self.y < movemy and self.y + 114 > movemy:
-                    self.part3_fcheck = 1
-                    self.screenx = movemx
-                    self.screeny = movemy
-
-                else:
-                    self.part3_fcheck = 0
-            else:
-                self.part3_fcheck = 0
     def draw(self):
+        if self.plant_part1==1 and self.part1_clock/2 >(get_time() - self.first_time1):
+            self.image5.clip_draw(0, 0, 51, 49, self.x+57, self.y+57, 50, 50)
+        elif self.plant_part1==1:
+            self.image6.clip_draw(0, 0, 51, 49, self.x+57, self.y+57, 50, 50)
+        if self.plant_part2==1:
+            self.image7.clip_draw(0, 0, 296, 296, self.x + 57, self.y + 57, 50+(get_time() - self.first_time1)/2, 50+(get_time() - self.first_time1)/2)
+        if self.plant_part3 == 1:
+            self.image7.clip_draw(0, 0, 296, 296, self.x + 57, self.y + 57, 50 + 30,50 +30)
         if self.mcheck==1:
             self.image.clip_draw(0, 0, 200 , 100, self.screenx+100,self.screeny+50,200,100)
             if self.fcheck==0 and self.plant_part1==0:
@@ -338,12 +379,12 @@ class Field_State:
             if self.fcheck == 0:
                 self.font.draw(self.screenx + 5, self.screeny + 80, '평범한 박 씨앗', (255, 255, 255))
                 self.font2.draw(self.screenx + 5, self.screeny + 55, '성숙기:', (255, 255, 255))
-                self.font2.draw(self.screenx + 75, self.screeny + 55, '%d분(남음)' % (self.part2_clock - (get_time() - self.first_time1)),(0, 255, 0))
+                self.font2.draw(self.screenx + 75, self.screeny + 55, '%d분(남음)' % ((self.part3_clock - (get_time() - self.first_time1))/60),(0, 255, 0))
                 self.font2.draw(self.screenx + 5, self.screeny + 35, '생명력:', (255, 255, 255))
                 self.font2.draw(self.screenx + 75, self.screeny + 35, '나쁨(하)', (255, 255, 0))
                 self.font2.draw(self.screenx + 5, self.screeny + 16, '상태: 수확 대기', (255, 255, 255))
 def enter():
-    global main_ui,money,windcursor,main_background,cagebird,field,seeds,seed_information
+    global main_ui,money,windcursor,main_background,cagebird,field,seeds,seed_information,plant
     main_ui = Main_UI()
     money=Money()
     main_background=Main_Background()
@@ -356,13 +397,14 @@ def enter():
     field[1].y = 186
     field[2].x = 490
     field[2].y = 186
+    plant=Draw_Plant()
     cagebird=[Bird() for i in range(6)]
     seeds=[Have_Seed() for i in range(10)]
     seeds[0].name=1
     seeds[0].count = 3
 
 def exit():
-    global main_ui,money,windcursor,main_background,cagebird,field,seeds,seed_information
+    global main_ui,money,windcursor,main_background,cagebird,field,seeds,seed_information,plant
     del (main_ui)
     del (money)
     del (windcursor)
@@ -371,6 +413,7 @@ def exit():
     del(field)
     del(seeds)
     del(seed_information)
+    del(plant)
 def pause():
     pass
 

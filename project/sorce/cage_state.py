@@ -22,6 +22,8 @@ class Expedition_Confirm:
     image = None
     def __init__(self):
         self.frame = 0
+        self.image2 = load_image('Chicken2.png')
+        self.font = load_font('Gungsuh.TTF', 30)
         if Expedition_Confirm.image == None:
             self.image = load_image('expedition.png')
 
@@ -30,7 +32,8 @@ class Expedition_Confirm:
 
     def draw(self):
         self.image.clip_draw(0, 0, 800, 600,400 ,300)
-
+        self.image2.clip_draw(0, 0, 210, 164, 400, 370, 200, 200)
+        self.font.draw(290, 260, '상처입은 닭둘기', (255, 255, 255))
 class Main_Background:
     image = None
     def __init__(self):
