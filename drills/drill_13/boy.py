@@ -70,8 +70,8 @@ class WalkingState:
         boy.x += boy.x_velocity * game_framework.frame_time
         boy.y += boy.y_velocity * game_framework.frame_time
 
-        boy.x = clamp(0, boy.x, boy.bg.w)
-        boy.y = clamp(0, boy.y, boy.bg.h)
+        boy.x = clamp((boy.y+38)/(103/19), boy.x, (boy.y-9770)/-(103/19))
+        boy.y = clamp(70, boy.y, 1100)
 
 
     @staticmethod
@@ -105,6 +105,8 @@ next_state_table = {
                 SPACE: WalkingState}
 }
 
+
+       
 
 class Boy:
 
